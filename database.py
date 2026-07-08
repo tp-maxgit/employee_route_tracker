@@ -1,0 +1,41 @@
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, ForeignKey
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+import datetime
+
+
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Cricket123?@localhost:5432/employee_tracker"
+
+
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    email = Column(String, unique=True, index=True)
+    role = Column(String, default="employee") 
+    sessions = relationship("TrackingSession", back_populates="user")
+
+class TrackingSession(Base):
+    __tablename__ = "tracking_sessions"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    start_time = Column(DateTime, default=datetime.datetime.utcnow)
+    end_time = Column(DateTime, nullable=True)
+    total_distance_km = Column(Float, default=0.0)
+    is_active = Column(Boolean, default=True)
+    user = relationship("User", back_populates="sessions")
+    coordinates = relationship("Coordinate", back_populates="session")
+
+class Coordinate(Base):
+    __tablename__ = "coordinates"
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(Integer, ForeignKey("tracking_sessions.id"))
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    is_anomaly = Column(Boolean, default=False) 
+    session = relationship("TrackingSession", back_populates="coordinates")
