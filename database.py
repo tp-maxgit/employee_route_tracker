@@ -6,7 +6,7 @@ import datetime
 
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:Cricket123?@localhost:5432/employee_tracker")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:YOUR_PASSWORD@localhost:5432/employee_tracker")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
