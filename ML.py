@@ -12,7 +12,7 @@ def flag_anomalous_coordinates(coords_list):
     X=df[['latitude' , 'longitude']]
 
 
-    model=IsolationForest(contamination=0.05, random_state=42)
+    model=IsolationForest(contamination=0.005, random_state=42)
 
     df['anomaly_score']=model.fit_predict(X)
 
