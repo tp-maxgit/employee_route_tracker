@@ -64,8 +64,8 @@ flutter run -d chrome
 ---
 
 ## How to Test the System
-1. Open the **React Admin Dashboard** (`http://localhost:5173`) and log in as an admin (`admin@company.com` / `admin123`).
-2. Open the **Flutter App** and log in as an employee (`rahul@company.com` / `emp123`).
+1. Open the **React Admin Dashboard** (`http://localhost:5173`) and log in as an admin.
+2. Open the **Flutter App** and log in as an employee.
 3. On the Flutter app, click **Start Duty**. 
 4. Click the **"📍 Simulate GPS Ping"** button a few times to generate simulated movement.
 5. Watch the React Admin Dashboard — you will see the blue route line drawing live on the map!
