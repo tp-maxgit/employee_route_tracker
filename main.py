@@ -49,11 +49,7 @@ def get_db():
 def read_root():
     return {"message": "Tracking API is Live and Connected to the Database!"}
 
-
-# =============================================================
 # AUTH ENDPOINTS
-# =============================================================
-
 @app.post("/api/users/register", response_model=UserResponse)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     """Register a new employee or admin with name, email, and password."""
@@ -97,10 +93,7 @@ def login_user(request: LoginRequest, db: Session = Depends(get_db)):
     }
 
 
-# =============================================================
 # USER / EMPLOYEE ENDPOINTS
-# =============================================================
-
 @app.get("/api/users", response_model=List[UserResponse])
 def list_users(db: Session = Depends(get_db)):
     """List all employees (for the dashboard's employee selector)."""
@@ -157,11 +150,7 @@ def employee_dashboard(user_id: int, db: Session = Depends(get_db)):
         "todays_distance_km": round(todays_km, 2),
     }
 
-
-# =============================================================
 # SESSION TRACKING ENDPOINTS
-# =============================================================
-
 # Legacy /start-session endpoint (used by Flutter)
 class SessionData(BaseModel):
     employee_id: int
@@ -266,11 +255,7 @@ def stop_trip(session_id: int, db: Session = Depends(get_db)):
         "total_distance_km": session.total_distance_km
     }
 
-
-# =============================================================
 # DASHBOARD / HISTORY ENDPOINTS
-# =============================================================
-
 @app.get("/api/sessions/{session_id}/route")
 def get_session_route(session_id: int, db: Session = Depends(get_db)):
     """Get the GPS route for a specific session (used by the map view)."""
@@ -395,11 +380,7 @@ def get_monthly_report(user_id: int, month: str, db: Session = Depends(get_db)):
         total_sessions=total_sessions,
     )
 
-
-# =============================================================
 # ANOMALY DETECTION (ML)
-# =============================================================
-
 @app.post("/api/audit/{session_id}")
 def run_route_audit(session_id: int, db: Session = Depends(get_db)):
     """Run Isolation Forest anomaly detection on a session's route."""
