@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 8),
             const Text(
-              "Role: Field Executive",
+              "Role: Employee",
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             
