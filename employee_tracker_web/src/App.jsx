@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import MonthlyReportPage from './pages/MonthlyReportPage';
-import EmployeeEmulatorPage from './pages/EmployeeEmulatorPage';
+import EmployeeManagementPage from './pages/EmployeeManagementPage';
 import Sidebar from './components/Sidebar';
 
 function App() {
@@ -40,11 +40,6 @@ function App() {
     return <LoginPage onLogin={handleLogin} />;
   }
 
-  // Employee logged in → show mobile emulator
-  if (user.role === 'employee') {
-    return <EmployeeEmulatorPage user={user} onLogout={handleLogout} />;
-  }
-
   // Admin logged in → show dashboard layout
   return (
     <BrowserRouter>
@@ -54,6 +49,7 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/monthly" element={<MonthlyReportPage />} />
+            <Route path="/employees" element={<EmployeeManagementPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </main>

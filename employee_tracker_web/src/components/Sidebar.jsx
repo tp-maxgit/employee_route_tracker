@@ -31,6 +31,14 @@ export default function Sidebar({ user, onLogout }) {
           <span className="icon">📊</span>
           Monthly Report
         </NavLink>
+
+        <NavLink
+          to="/employees"
+          className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+        >
+          <span className="icon">👥</span>
+          Employees
+        </NavLink>
       </nav>
 
       <div className="sidebar-footer">

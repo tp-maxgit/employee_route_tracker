@@ -15,6 +15,10 @@ export default function LoginPage({ onLogin }) {
     try {
       const data = await login(email, password);
 
+      if (data.role !== 'admin') {
+        throw new Error('Access denied. Admin privileges required.');
+      }
+
       // Store user info and notify parent
       localStorage.setItem('user', JSON.stringify(data));
       onLogin(data);

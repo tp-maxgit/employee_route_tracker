@@ -293,10 +293,10 @@ def get_route_history(session_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/api/users/{user_id}/sessions", response_model=List[SessionDetailResponse])
-def get_user_sessions_by_date(user_id: int, date: str, db: Session = Depends(get_db)):
+def get_user_sessions_by_date(user_id: int, start_date: str, end_date: str, db: Session = Depends(get_db)):
     """
-    Get all sessions for an employee on a given date, with coordinates included.
-    Query param: ?date=YYYY-MM-DD
+    Get all sessions for an employee on a given date range, with coordinates included.
+    Query param: ?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD
     """
     # Verify user exists
     user = db.query(User).filter(User.id == user_id).first()
@@ -304,12 +304,13 @@ def get_user_sessions_by_date(user_id: int, date: str, db: Session = Depends(get
         raise HTTPException(status_code=404, detail="Employee not found")
     
     try:
-        target_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        s_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+        e_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
     
-    day_start = datetime.datetime.combine(target_date, datetime.time.min)
-    day_end = datetime.datetime.combine(target_date, datetime.time.max)
+    day_start = datetime.datetime.combine(s_date, datetime.time.min)
+    day_end = datetime.datetime.combine(e_date, datetime.time.max)
     
     sessions = db.query(TrackingSession).filter(
         TrackingSession.user_id == user_id,

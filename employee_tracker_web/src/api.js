@@ -45,8 +45,8 @@ export function getUsers() {
 
 // ---- Sessions ----
 
-export function getUserSessions(userId, date) {
-  return request(`/api/users/${userId}/sessions?date=${date}`);
+export function getUserSessions(userId, startDate, endDate) {
+  return request(`/api/users/${userId}/sessions?start_date=${startDate}&end_date=${endDate}`);
 }
 
 export function getSessionRoute(sessionId) {
