@@ -202,10 +202,11 @@ export default function DashboardPage() {
                 {sessions.map((s, idx) => {
                   const sDate = parseDate(s.start_time);
                   const sDateStr = sDate ? sDate.toISOString().split('T')[0] : 'Unknown';
+                  const displayDateStr = sDate ? `${String(sDate.getDate()).padStart(2, '0')}-${String(sDate.getMonth() + 1).padStart(2, '0')}-${sDate.getFullYear()}` : 'Unknown';
                   const isViewing = activeSessionIdx === idx;
                   return (
                     <tr key={s.id} style={{ borderBottom: '1px solid var(--border)', backgroundColor: isViewing ? 'rgba(59, 130, 246, 0.1)' : 'transparent' }}>
-                      <td style={{ padding: '12px 16px' }}>{sDateStr}</td>
+                      <td style={{ padding: '12px 16px' }}>{displayDateStr}</td>
                       <td style={{ padding: '12px 16px' }}>#{idx + 1}</td>
                       <td style={{ padding: '12px 16px' }}>{sDate ? sDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--'}</td>
                       <td style={{ padding: '12px 16px' }}>{s.end_time ? parseDate(s.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : (s.is_active ? '🟢 Active' : '--:--')}</td>
